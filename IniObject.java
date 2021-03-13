@@ -1,8 +1,10 @@
 package HW4;
 import java.io.BufferedWriter;
+import java.io.InvalidClassException;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
+import java.security.KeyException;
 import java.util.ArrayList;
 
 /**
@@ -58,15 +60,75 @@ public class IniObject {
      * @return The object at section:key that was removed, or null
      */
     public Object remove(String section, String key) {return new IniObject();} //TODO: maybe add invalid key exception
+    /**
+     * Writes the contents of the {@code IniObject} as ini that is loadable.
+     * 
+     * <b>Warning: This method assumes the data structure is acyclical</b>
+     * @param writer the writer object
+     * @return the writer
+     * @throws IniException if an error occurs while writing
+     */
     public Writer write(Writer writer) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
     public Writer write(Writer writer, String section) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
     public Writer write(Writer writer, boolean shouldWriteLineByLineContents) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
+    /**
+     * Returns an array list of the keys in a given section if the section exists. For example
+     * if a section had entries {@code "car:mazda", "car:toyota", "car:ford"}, then calling {@code keyForSection("car")}
+     * would return {@code ["mazda", "toyota", "ford"]}.
+     * @param section the section whose keys to return
+     * @return A list of the keys in a section. 
+     */
     public ArrayList<String> keysForSection(String section) {return new ArrayList<>();}
-    public String getString(String section, String key) {return "";}
-    public int getInt(String section, String key) {return 0;} // TODO: possibly overload with entries
-    public long getLong(String section, String key) {return 0;}
-    public double getDouble(String section, String key) {return 0;}
-    public boolean getBoolean(String section, String key) {return true;}
+    /**
+     * Returns the string stored at the entry "section:key". 
+     * 
+     * @param section
+     * @param key
+     * @return the string value of the entry "section:key".
+     * @throws ClassCastException if the entry at "section:key" cannot be cast as a string.
+     * @throws KeyException if "section:key" does not exist in the {@code IniObject}.
+     */
+    public String getString(String section, String key) throws KeyException, ClassCastException  {return "";}
+    /**
+     * Returns the int stored at the entry "section:key". 
+     * 
+     * @param section
+     * @param key
+     * @return the int value of the entry "section:key".
+     * @throws ClassCastException if the entry at "section:key" cannot be cast as an int.
+     * @throws KeyException if "section:key" does not exist in the {@code IniObject}.
+     */
+    public int getInt(String section, String key) throws KeyException, ClassCastException {return 0;} // TODO: possibly overload with entries
+    /**
+     * Returns the long stored at the entry "section:key". 
+     * 
+     * @param section
+     * @param key
+     * @return the long value of the entry "section:key".
+     * @throws ClassCastException if the entry at "section:key" cannot be cast as a long.
+     * @throws KeyException if "section:key" does not exist in the {@code IniObject}.
+     */
+    public long getLong(String section, String key) throws KeyException, ClassCastException {return 0;}
+    /**
+     * Returns the double stored at the entry "section:key". 
+     * 
+     * @param section
+     * @param key
+     * @return the double value of the entry "section:key".
+     * @throws ClassCastException if the entry at "section:key" cannot be cast as a double.
+     * @throws KeyException if "section:key" does not exist in the {@code IniObject}.
+     */
+    public double getDouble(String section, String key) throws KeyException, ClassCastException {return 0;}
+    /**
+     * Returns the boolean stored at the entry "section:key". 
+     * 
+     * @param section
+     * @param key
+     * @return the boolean value of the entry "section:key".
+     * @throws ClassCastException if the entry at "section:key" cannot be cast as a boolean.
+     * @throws KeyException if "section:key" does not exist in the {@code IniObject}.
+     */
+    public boolean getBoolean(String section, String key) throws KeyException, ClassCastException {return true;}
     /**
      * Returns true if the entry exists in the {@code IniObject}. An entry maps to an optional value.
      * Entries are of the form "section" or "section:key".
