@@ -1,8 +1,8 @@
 package HW4;
 import java.io.BufferedWriter;
-import java.io.InvalidClassException;
+import java.io.File;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.io.Writer;
 import java.security.KeyException;
 import java.util.ArrayList;
@@ -61,7 +61,9 @@ public class IniObject {
      */
     public Object remove(String section, String key) {return new IniObject();} //TODO: maybe add invalid key exception
     /**
-     * Writes the contents of the {@code IniObject} as ini that is loadable.
+     * Writes the contents of the {@code IniObject} in a loadable ini format.
+     * 
+     * // TODO: add example
      * 
      * <b>Warning: This method assumes the data structure is acyclical</b>
      * @param writer the writer object
@@ -69,8 +71,30 @@ public class IniObject {
      * @throws IniException if an error occurs while writing
      */
     public Writer write(Writer writer) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
+    /**
+     * Writes the contents of a section of the {@code IniObject} in a loadable ini format.
+     * 
+     * // TODO: add example
+     * 
+     * <b>Warning: This method assumes the data structure is acyclical</b>
+     * @param writer the writer object
+     * @param section the section we wish to write
+     * @return the writer
+     * @throws IniException
+     */
     public Writer write(Writer writer, String section) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
-    public Writer write(Writer writer, boolean shouldWriteLineByLineContents) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
+    /**
+     * Writes the contents of the {@code IniObject} line by line. This method is commonly used
+     * for debugging
+     * 
+     * // TODO: add example
+     * 
+     * @param writer
+     * @param shouldWriteLineByLineContents
+     * @return
+     * @throws IniException
+     */
+    public Writer writeLines(Writer writer) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
     /**
      * Returns an array list of the keys in a given section if the section exists. For example
      * if a section had entries {@code "car:mazda", "car:toyota", "car:ford"}, then calling {@code keyForSection("car")}
@@ -136,8 +160,24 @@ public class IniObject {
      * @return {@code true} if the entry is in the {@code IniObject} and {@code false} otherwise.
      */
     public boolean hasEntry(String entry) {return true;}
-
-
+    /**
+     * Creates an empty {@code IniObject} with no entry value mappings. The class
+     * is simply instanitated
+     * <blockquote><pre>
+     * ini = new IniObject();
+     * </pre></blockquote>
+     */
     public IniObject() {}
-    public IniObject(Reader iniFile) {} // TODO: make sure that this is how I can ask for an ini file
+    /**
+     * Creates an {@code IniObject} with the entry value mappings of the .ini file {@code iniFile}.
+     * This class is simply instantiated
+     * 
+     * <blockquote><pre>
+     * ini = new IniObject(new File("./config.ini"));
+     * </pre></blockquote>
+     * 
+     * @param iniFilePath Path to the .ini file you wish to load.
+     * @throws IOException if the {@code iniFilePath} is malformed or the wrong extension.
+     */
+    public IniObject(File iniFilePath) throws IOException {} 
 }
