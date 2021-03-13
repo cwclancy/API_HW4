@@ -18,12 +18,28 @@ import java.util.ArrayList;
  * {@code get}ing methods for the values of entries. The get methods throw a runtime {@code IniException} if
  * the entry does not exist.
  * <p>
- * To <b>load a .ini file</b> simply TODO: add loading example
+ * To <b>load a .ini file</b> simply 
+ * <blockquote><pre>
+ * IniObject ini = new IniObject(new File("test.ini"));
+ * </pre></blockquote>
  * <p>
  * <b>Values can be added or removed</b> from the {@code IniObject} using the {@code put} and {@code remove} methods
  * respectively. For example:
+ * <blockquote><pre>
+ * ini.put("student", "connor", 42);
+ * ini.put("student", "piper", 36);
+ * ini.remove("student", "piper");
+ * </pre></blockquote>
+ * The resulting {@code IniObject} will only contain the mapping {@code "student:connor"} to {@code 42}.
  * <p>
- * To <b>dump the contents</b> of an {@code IniObject} into a .ini file, simply: TODO: add dump example
+ * To <b>dump the contents</b> of an {@code IniObject} into a .ini file, simply:
+ * <blockquote><pre>
+ *  try {
+            ini.write(new FileWriter("out.ini"));
+        } catch (IOException e) {
+            System.out.println("file does not exist");
+        } 
+ * </pre></blockquote>
  * <p>
  * This class is mutable and <b>not thread safe</b>.
  */
@@ -79,9 +95,9 @@ public class IniObject {
      * <b>Warning: This method assumes the data structure is acyclical</b>
      * @param writer the writer object
      * @return the writer
-     * @throws IOException if an error occurs while writing
+     * @throws IniException if an error occurs while writing
      */
-    public Writer write(Writer writer) throws IOException {return new FileWriter("./ini.ini");}
+    public Writer write(Writer writer) throws IniException {return writer;}
     /**
      * Writes the contents of a section of the {@code IniObject} in a loadable ini format.
      * <p>
@@ -94,9 +110,9 @@ public class IniObject {
      * @param writer the writer object
      * @param section the section we wish to write
      * @return the writer
-     * @throws IOException if an error occurs while writing
+     * @throws IniException if an error occurs while writing
      */
-    public Writer write(Writer writer, String section) throws IOException {return new BufferedWriter(new OutputStreamWriter(System.out));}
+    public Writer write(Writer writer, String section) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
     /**
      * Writes the contents of the {@code IniObject} line by line. This method is commonly used
      * for debugging
@@ -108,9 +124,9 @@ public class IniObject {
      * <p>
      * @param writer the writer object
      * @return the writer
-     * @throws IOException if an error occurs while writing
+     * @throws IniException if an error occurs while writing
      */
-    public Writer writeLines(Writer writer) throws IOException {return new BufferedWriter(new OutputStreamWriter(System.out));}
+    public Writer writeLines(Writer writer) throws IniException {return new BufferedWriter(new OutputStreamWriter(System.out));}
     /**
      * Returns an array list of the keys in a given section if the section exists. For example
      * if a section had entries {@code "car:mazda", "car:toyota", "car:ford"}, then calling {@code keyForSection("car")}
@@ -132,6 +148,15 @@ public class IniObject {
     /**
      * Returns the int stored at the entry "section:key". 
      * 
+     * Supported values for ints include
+     * <ul>
+     *  <li> "42" to 42
+     *  <li> "042" to 34 (octal to decimal)
+     *  <li> "0x42" to 66 (hexa to decimal)
+     * </ul>
+     * 
+     * No guarantees are made on conversions that overflow.
+     * 
      * @param section the section of the entry
      * @param key the key of the entry
      * @return the int value of the entry "section:key".
@@ -141,6 +166,15 @@ public class IniObject {
     public int getInt(String section, String key) throws KeyException, ClassCastException {return 0;} // TODO: possibly overload with entries
     /**
      * Returns the long stored at the entry "section:key". 
+     * 
+     * Supported values for longs include
+     * <ul>
+     *  <li> "42" to 42
+     *  <li> "042" to 34 (octal to decimal)
+     *  <li> "0x42" to 66 (hexa to decimal)
+     * </ul>
+     * 
+     * No guarantees are made on conversions that overflow.
      * 
      * @param section the section of the entry
      * @param key the key of the entry
@@ -161,7 +195,23 @@ public class IniObject {
     public double getDouble(String section, String key) throws KeyException, ClassCastException {return 0;}
     /**
      * Returns the boolean stored at the entry "section:key". 
-     * 
+     * <p>
+     * A {@code true} boolean is returned if one of the follwing is matched 
+     * <ul>
+     *  <li> A string starting with a 'y'
+     *  <li> A string starting with a 'Y'
+     *  <li> A string starting with a 't'
+     *  <li> A string starting with a 'T'
+     *  <li> A string starting with a '1'
+     * </ul>
+     * A {@code false} boolean is returned if one of the follwing is matched
+     * <ul>
+     *  <li> A string starting with a 'n'
+     *  <li> A string starting with a 'N'
+     *  <li> A string starting with a 'f'
+     *  <li> A string starting with a 'F'
+     *  <li> A string starting with a '0'
+     * </ul>
      * @param section the section of the entry
      * @param key the key of the entry
      * @return the boolean value of the entry "section:key".
@@ -172,6 +222,7 @@ public class IniObject {
     /**
      * Returns true if the entry exists in the {@code IniObject}.
      * Entries are of the form "section" or "section:key".
+     * 
      * @param entry The entry to check if exists in the {@code IniObject}.
      * @return {@code true} if the entry is in the {@code IniObject} and {@code false} otherwise.
      */
@@ -192,8 +243,18 @@ public class IniObject {
      * ini = new IniObject(new File("./config.ini"));
      * </pre></blockquote>
      * 
-     * @param iniFilePath Path to the .ini file you wish to load.
-     * @throws IOException if the {@code iniFilePath} is malformed or the wrong extension.
+     * @param iniFilePath The file of the .ini object you wish to load
+     * @throws IniException if the {@code iniFilePath} is malformed or the wrong extension.
      */
-    public IniObject(File iniFilePath) throws IOException {} 
+    public IniObject(File iniFilePath) throws IniException {} 
+
+    public static void main(String[] args) {
+        IniObject ini = new IniObject(new File("test.ini"));
+        try {
+            ini.write(new FileWriter("out.ini"));
+        } catch (IOException e) {
+            System.out.println("file does not exist");
+        }
+        
+    }
 }
