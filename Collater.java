@@ -1,6 +1,9 @@
 package HW4;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * The class {@code Collater} allows users to compare strings using a collation ordering
@@ -33,6 +36,26 @@ import java.util.Comparator;
 * By contrast, {@code stringTransform} do the mapping explicitly, which is more efficiently when
 * comparing the same string for several times.
 *
+* <p>
+*
+* To simply sort an array of strings {@code frenchWords} using the french locale, all you need to do is
+* <blockquote><pre>
+* Arrays.sort(frenchWords, new Collater(LOCALE.fr_FR));
+* </pre></blockquote>
+*
+* <p>
+* 
+* When done like this each word is transformed in every comparison. This can become inefficient if
+* many comparisons are done. In that case you will want to first tranform the words using {@code stringTransform},
+* and then the default string comparison. For example to sort the same array of {@code frenchWords}
+* <blockquote><pre>
+*   Collater c = new Collater(LOCALE.fr_FR);
+    String[] frenchWords = new String[4];
+    for (int i=0; i<frenchWords.length; i++) {
+        frenchWords[i] = c.stringTransform(frenchWords[i]);
+    }
+    Arrays.sort(frenchWords); 
+* </pre></blockquote>
 */
 class Collater implements Comparator<String> {
     /* Enum for locale category. Here we just list some of them */
@@ -85,4 +108,13 @@ class Collater implements Comparator<String> {
     public int compare(String s1, String s2) {
         return 0;
     };
+
+    public static void main(String[] args) {
+        Collater c = new Collater(LOCALE.fr_FR);
+        String[] frenchWords = new String[4];
+        for (int i=0; i<frenchWords.length; i++) {
+            frenchWords[i] = c.stringTransform(frenchWords[i]);
+        }
+        Arrays.sort(frenchWords);
+    }
  } 
