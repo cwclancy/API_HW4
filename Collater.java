@@ -1,9 +1,6 @@
 package HW4;
 
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
 * The class {@code Collater} allows users to compare strings using a collation ordering
@@ -91,7 +88,7 @@ class Collater implements Comparator<String> {
      * @param source the string need to be transferred.
      * @return The transferred string.
      */
-     String stringTransform (String source) {return "";}
+     String transform (String source) {return "";}
 
     /**
      * Compares the strings {@code s1} and {@code s2}. These strings are compared using the locale
@@ -108,13 +105,4 @@ class Collater implements Comparator<String> {
     public int compare(String s1, String s2) {
         return 0;
     };
-
-    public static void main(String[] args) {
-        Collater c = new Collater(LOCALE.fr_FR);
-        String[] frenchWords = new String[4];
-        for (int i=0; i<frenchWords.length; i++) {
-            frenchWords[i] = c.stringTransform(frenchWords[i]);
-        }
-        Arrays.sort(frenchWords);
-    }
  } 
