@@ -1,4 +1,6 @@
 package HW4;
+
+
 /**
  * The class {@code GetOpt} allows the program to take in the command line
  * options.
@@ -66,8 +68,9 @@ public class GetOpt {
      * @param options String representing Options
      * @return If an option is successfully found then it returns the option
      * character else returns -1
+     *
      */
-   public int getoption(String[] argv, String options) { return 0; } //Todo:
+   public int getoption(String[] argv, String options)  { return 0; } //Todo:
     // do we need argc?
 
     /**
@@ -80,10 +83,11 @@ public class GetOpt {
      * @return If a short option is successfully found then it returns the
      * short option character else returns -1. For a long option, it returns
      * the value of {@code val}
+     * @throws GetOptException is an error in an {@code LongOptionsObject}
      */
 
    public int getopt_long(String[] argv, String optstring,
-                          HW4.LongOptionsObject[] options) { return 0; }
+                          LongOptionsObject[] options) throws GetOptException { return 0; }
                           // todo: do we need longindex?
 
     /**
@@ -93,7 +97,8 @@ public class GetOpt {
      * @param options Represents an array of {@code LongOptionsObject} type
      * to specify the long options.
      * @return returns the value of {@code val}
+     * @throws GetOptException is an error in an {@code LongOptionsObject}
      */
    public int getopt_long_only(String[] argv,
-                               HW4.LongOptionsObject[] options) {return 0; }
+                               LongOptionsObject[] options)  throws GetOptException {return 0; }
 }
