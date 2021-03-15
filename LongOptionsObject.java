@@ -2,13 +2,13 @@ package HW4;
 import java.lang.String;
 /**
  * A {@code LongOptionsObject} is a collection of long options
- * that interfaces with GetOpt class. Specifically this class
+ * that interfaces with CommandLineParser class. Specifically this class
  * is meant to describe the long option fields. A common use case of this
  * class is to make the program accept long options if it uses any options.
  * <p>
  * To <b>create a LongOptionsObject </b>
  * <blockquote><pre>
- * LongOptionsObject options = new LongOptionsObject(String name, int has_arg, int flag, int val);
+ * LongOptionsObject options = new LongOptionsObject(String name, int argType, int flag, int val);
  * </pre></blockquote>
  * <p>
  */
@@ -23,7 +23,7 @@ public class LongOptionsObject {
     /**
      * Specifies if the option takes an argument.
     */
-    public optionType has_arg;
+    public optionType argType;
     /**
      * Specifies how the results are returned for a long option
      */
@@ -33,15 +33,15 @@ public class LongOptionsObject {
      */
     public int val;
     /**
-     * Creates a {@code LongOptionsObject} with mappings to {@code name}, {@code has_arg},
+     * Creates a {@code LongOptionsObject} with mappings to {@code name}, {@code argType},
      * {@code flag}, and {@code val}.
      * If flag is null, the contents of val indicate which option it found.
      * If flag is not a null, the value of flag is stored in val.
      */
-    public LongOptionsObject(String name, optionType has_arg, String flag,
+    public LongOptionsObject(String name, optionType argType, String flag,
                              int val) {
         name = name;
-        has_arg = has_arg;
+        argType = argType;
         flag = flag;
         val = val;
     }
