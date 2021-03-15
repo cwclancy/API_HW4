@@ -57,7 +57,7 @@ public class CommandLineParser {
      * Defines a variable that is set by {@code next} to the index of the next
      * element of the argv to be processed. Default value is set to 1.
      */
-   public int optIndex=1;
+   private int optIndex=1;
     /**
      * Defines the variable which is set to a non-zero value for {@code next}
      * to print an error message. Default value is set to 1.
@@ -69,7 +69,7 @@ public class CommandLineParser {
      * option with a missing required argument, this variable is set with that
      * option character. Default value is set to 0.
      */
-   public char optOpt;
+   private char optOpt;
 
     /**
      * Constructor to create an object with short options
@@ -120,13 +120,13 @@ public class CommandLineParser {
      * Method that allows user to set/ reset the optIndex field
      * @param val The value to be set for optIndex
      */
-    public void setOptIndex(int val) {}
+    private void setOptIndex(int val) {}
 
 
     /**
      * Method to allow user to get the current argument element
      * @return The current argument value is put in optArg
      */
-    public String OptArg() { return "";}
+    private String OptArg() { return "";}
 
 }
