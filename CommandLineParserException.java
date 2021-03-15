@@ -6,8 +6,9 @@ package HW4;
  */
 public class CommandLineParserException extends RuntimeException {
 
-    /**
+    private static final long serialVersionUID = 1L;
 
+    /**
      * The constructor for the exception thrown when there is an error in an {@code CommandLineParserException}.
      * This exception is simply thrown:
      * <blockquote><pre>
