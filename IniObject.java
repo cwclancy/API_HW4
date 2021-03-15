@@ -247,14 +247,4 @@ public class IniObject {
      * @throws IniException if the {@code iniFilePath} is malformed or the wrong extension.
      */
     public IniObject(File iniFilePath) throws IniException {} 
-
-    public static void main(String[] args) {
-        IniObject ini = new IniObject(new File("test.ini"));
-        try {
-            ini.write(new FileWriter("out.ini"));
-        } catch (IOException e) {
-            System.out.println("file does not exist");
-        }
-        
-    }
 }
