@@ -40,10 +40,8 @@ public class LongOptionsObject {
      */
     public LongOptionsObject(String name, int has_arg, int flag, int val) {
         name = name;
-        has_arg = has_arg ;
+        has_arg = has_arg;
         flag = flag;
         val = val;
     }
-    // Todo: Can we get rid of flag?
-
 }
