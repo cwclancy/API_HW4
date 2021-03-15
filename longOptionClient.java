@@ -1,6 +1,5 @@
 package HW4;
 
-import static HW4.LongOptionsObject.optionType.NO_ARGUMENT;
 
 // This class demonstrates the usage of longOption command for the command
 // line parser
@@ -12,7 +11,7 @@ public class longOptionClient {
 
         new CommandLineParser(args, "abc:", options);
         parser.setPosixlyCorrect(true);
-        while((ch = parser.next(args, "abc:",options)) != -1) {
+        while((ch = parser.next()) != -1) {
             switch(ch) {
                 case 'a':
                     System.out.println("Encountered option a");

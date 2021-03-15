@@ -84,8 +84,6 @@ public class CommandLineParser {
 
     /**
      * Method to get the next option character
-     * @param args String array of arguments
-     * @param optionString String representing the option
      * @return This method returns the following based on the use case
      * <ul>
      * <li> The option character for the next command line option.
@@ -101,7 +99,7 @@ public class CommandLineParser {
      * @throws CommandLineParserException if there is an error in parsing the
      * command line options.
      */
-    public int next( String[] args, String optionString) throws CommandLineParserException { return 0; }
+    public int next() throws CommandLineParserException { return 0; }
 
     /**
      * Method that allows the user to set Posixly Correct environment variable

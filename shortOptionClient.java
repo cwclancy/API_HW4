@@ -6,7 +6,7 @@ public class shortOptionClient {
         int ch;
         CommandLineParser parser = new CommandLineParser(args, "abc:");
         parser.setPosixlyCorrect(true);
-        while((ch = parser.next(args, "abc:")) != -1) {
+        while((ch = parser.next()) != -1) {
             switch(ch) {
                 case 'a':
                     System.out.println("Encountered option a");
