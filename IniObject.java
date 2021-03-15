@@ -1,8 +1,6 @@
 package HW4;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.security.KeyException;
@@ -240,7 +238,7 @@ public class IniObject {
      * This class is simply instantiated
      * 
      * <blockquote><pre>
-     * ini = new IniObject(new File("./config.ini"));
+     * IniObject ini = new IniObject(new File("./config.ini"));
      * </pre></blockquote>
      * 
      * @param iniFilePath The file of the .ini object you wish to load

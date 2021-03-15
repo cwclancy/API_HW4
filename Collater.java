@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 /**
 * The class {@code Collater} allows users to compare strings using a collation ordering
-* appropriate for the current locale. Function the same as {@code RuleBasedCollator} class.
+* appropriate for the current locale.
 * <p>
 *
 * In some locales, the conventions for lexicographic ordering differ from the strict
@@ -15,23 +15,21 @@ import java.util.Comparator;
 * <p>
 *
 * The way these functions work is by applying a mapping to transform the characters in a
-* multibyte string to a byte sequence that represents the string’s position in the collating
-* sequence of the current locale. Comparing two such byte sequences in a simple fashion is
+* string to a string that represents the string’s position in the collating
+* sequence of the current locale. Comparing two such strings in a simple fashion is
 * equivalent to comparing the strings with the locale’s collating sequence.
 *
 * <p>
-* The locale used by these functions in particular can be specified by setting the locale category
-* {@code lc_locale}, which applies to collation of strings.
-* By default the locale is initialized to user's current location inside the constructor.
-* We use Java build-in class {@code Locale}'s static filed to define enum type {@LOCALE}
-* See definition here.{@link https://docs.oracle.com/cd/E23824_01/html/E26033/glmbx.html}.
+* The locale used by these functions in particular can be specified by setting the locale
+* when constructing the Collater.
+* We use Java's built-in class {@code Locale}'s static filed to define enum type {@code LOCALE}
+*  <a href="https://docs.oracle.com/cd/E23824_01/html/E26033/glmbx.html">See definition here</a>.
 *
 * <p>
 *
-* There are two methods in Collater interface, {@code stringCollate} and {@code stringTransform}.
-* {@code stringCollate} do the mapping implicitly and is used to compare two strings directly.
-* By contrast, {@code stringTransform} do the mapping explicitly, which is more efficiently when
-* comparing the same string for several times.
+* There are two methods in Collater interface, {@code compare} and {@code transform}.
+* {@code compare} implicitly casts the passed in strings and then does the comparison.
+* By contrast, {@code transform} does the mapping explicitly, explicitly returning the transformed string.
 *
 * <p>
 *
@@ -43,63 +41,57 @@ import java.util.Comparator;
 * <p>
 * 
 * When done like this each word is transformed in every comparison. This can become inefficient if
-* many comparisons are done. In that case you will want to first tranform the words using {@code stringTransform},
+* many comparisons are done. In that case you will want to first tranform the words using {@code transform},
 * and then the default string comparison. For example to sort the same array of {@code frenchWords}
 * <blockquote><pre>
 *   Collater c = new Collater(LOCALE.fr_FR);
     String[] frenchWords = new String[4];
-    for (int i=0; i<frenchWords.length; i++) {
-        frenchWords[i] = c.stringTransform(frenchWords[i]);
+    for (int i=0; i {@code <frenchWords.length;} i++) {
+        frenchWords[i] = c.transform(frenchWords[i]);
     }
     Arrays.sort(frenchWords); 
 * </pre></blockquote>
 */
-class Collater implements Comparator<String> {
-    /* Enum for locale category. Here we just list some of them */
-    enum LOCALE{ en_US, fr_FR, zh_CN};
- 
-    /*
-     * Variable to store current lc_locale setting
+public class Collater implements Comparator<String> {
+    /**
+     * Available locales for the Collater to tranform and compare strings.
      */
-    static LOCALE lc_locale;
+    public enum LOCALE{ en_US, fr_FR, zh_CN};
  
     /**
-     * Constructor using to set the lc_locale to locale's value.
-     * If argument locale is not specified, set lc_locale to current locale.
+     * Create a {@code Collater} object with the given {@code locale}. For example, this class
+     * is simply instantiated with the french locale as follows:
+     * 
+     * <blockquote><pre>
+     * Collater collater = new Collater(LOCALE.fr_FR);
+     * </pre></blockquote>
      */
     Collater(LOCALE locale) {}
-    /* Set the lc_locale*/
-    void setLcLocale(LOCALE locale) {}
-    /* Get the lc_locale*/
-    LOCALE getLcLocale() {return LOCALE.en_US;}
+
     /**
-     * Compare two strings using collating sequence of the current locale {@code}lc_locale setting
-     * for one time comparing purpose.
-     * @param str1 string1
-     * @param str2 string2
-     * @return return -1 if string1 less then string2, return 0 is string1 equals to string2,
-     * return 1 if string1 larger then string2.
+     * Returns the locale the Collater object is using.
+     * @return the locale the Collater object is using.
      */
-    int stringCollate(String str1, String str2) {return 1;}
+    public LOCALE locale() {return LOCALE.en_US;}
  
     /**
-     * Transfer the input string using collation transformation determined by current lc_locale
+     * Transfer the input string using collation transformation determined by current locale
      * setting for multiple time comparing purpose.
      * @param source the string need to be transferred.
      * @return The transferred string.
      */
-     String transform (String source) {return "";}
+     public String transform (String source) {return "";}
 
     /**
      * Compares the strings {@code s1} and {@code s2}. These strings are compared using the locale
-     * returned by {@code getLcLocale}. The strings are implicity cast into the locale returned
-     * by {@code getLcLocale} and then compared. If you plan on comparing the strings many times, 
-     * to improve efficiency, transform the strings using {@code stringTransform} and then use
+     * returned by {@code locale}. The strings are implicity cast into the locale returned
+     * by {@code locale} and then compared. If you plan on comparing the strings many times, 
+     * to improve efficiency, transform the strings using {@code transform} and then use
      * the default java string comparison.
      * @param s1 first string to be compared
      * @param s2 second string to be compared
-     * @return a negative value if s1 < s2, 0 if the strings are equal, and a positive
-     * value of s1 > s2.
+     * @return a negative value if s1 {@literal <} s2, 0 if the strings are equal, and a positive
+     * value of s1 {@literal >} s2.
      */
     @Override
     public int compare(String s1, String s2) {
