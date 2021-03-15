@@ -10,16 +10,25 @@ package HW4;
  * are remaining, then next() returns -1.
  * <p>
  *
+ * The user can provide a short option command which is essentially the
+ * optionString. The user can also provide a long option command along with
+ * the short option. The user can provide an array of Long option commands,
+ * each array element representing a single long option. Each long option
+ * has a {@code name}, {@code argType}, {@code flag} and a {@code val}. The user
+ * can also choose to not provide any short option command and provide only
+ * long option commands. In that case the optionString will be empty.
+ *
  * A command Line Parser object can be instantiated in two ways
  * 1) By creating an object with short option command.
  *
  * <blockquote><pre>
- * CommandLineParser parser = new CommandLineParser(String[] args, String shortOptionString);
+ * CommandLineParser parser = new CommandLineParser(args, "abc:");
  * </pre></blockquote>
  *
  * 2) By creating an object with the long option command.
  * <blockquote><pre>
- * CommandLineParser parser = new CommandLineParser(String[] args, LongOptionsObject longOptions);
+ * LongOptionsObject[] options = {new LongOptionsObject("longOption", NO_ARGUMENT, null, 'a') };
+ * CommandLineParser parser = new CommandLineParser(args, "abc:", options);
  * </pre></blockquote>
  *
  * The optionString argument in the {@code next()} function represents a
@@ -28,9 +37,9 @@ package HW4;
  * option character is followed by two colons (‘::’)
  *
  * <blockquote><pre>
- * int c = parser.next(String[] args, String optionString);
+ * int c = parser.next();
  * </pre></blockquote>
- *
+ * <p>
  * By default, next() permutes the contents of the args that it scans
  * in such a way that all the non options are at the end. Two other scanning
  * modes are also implemented where if the first character of the
