@@ -1,12 +1,12 @@
 package HW4;
-
-public class commandLineParserClient {
+// This class demonstrates the usage of shortOption command for the command
+// line parser
+public class shortOptionClient {
     public static void main(String[] args) {
         int ch;
         CommandLineParser parser = new CommandLineParser(args, "abc:");
-        parser.setOptErr(1);
         parser.setPosixlyCorrect(true);
-        while((ch = parser.getNext(args, "abc:")) != -1) {
+        while((ch = parser.next(args, "abc:")) != -1) {
             switch(ch) {
                 case 'a':
                     System.out.println("Encountered option a");
@@ -28,3 +28,5 @@ public class commandLineParserClient {
         }
     }
 }
+
+
