@@ -54,7 +54,7 @@ public class CommandLineParser {
      * to print an error message. Default value is set to 1.
      */
     
-   public String optArg;
+   private String optArg;
     /**
      * If {@code next} encounters an unknown option character or an
      * option with a missing required argument, this variable is set with that
@@ -120,6 +120,6 @@ public class CommandLineParser {
      * Method to allow user to get the current argument element
      * @return The current argument value is put in optArg
      */
-    public String getOptArg() { return "";}
+    public String OptArg() { return "";}
 
 }
